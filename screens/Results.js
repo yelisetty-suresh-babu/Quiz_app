@@ -14,14 +14,15 @@ const Results = ({ route }) => {
   console.log(score);
   const [scor, setScor] = useState(0);
   const navigation = useNavigation();
+  console.log(score);
 
   useEffect(() => {
     let v = 0;
     for (let i = 0; i < 10; i++) {
-      v += score[i].score;
+      v += score[i];
     }
+    console.log(v);
     setScor(v);
-    // console.log(score);
   }, []);
 
   return (
@@ -30,18 +31,25 @@ const Results = ({ route }) => {
         <View className="mb-4">
           <Text className="text-3xl font-bold">Results</Text>
         </View>
-        <Image
-          source={require("../assets/quiz.jpeg")}
-          className="rounded-xl h-96 w-96 object-contain bottom-10"
-        />
+        {scor > 50 ? (
+          <Image
+            source={require("../assets/winner.jpeg")}
+            className="rounded-xl h-96 w-96 object-contain bottom-10"
+          />
+        ) : (
+          <Image
+            source={require("../assets/loser.jpeg")}
+            className="rounded-xl h-96 w-96 object-contain bottom-10"
+          />
+        )}
         <View className="h-[250px] bg-purple-500 w-[90%] bottom-10 rounded-lg">
           <View className="items-center  h-full w-full p-4">
             <Text className="text-4xl font-semibold">Score:</Text>
             <Text className="font-extrabold text-[80px] m-auto">
               {scor}/100
             </Text>
-            <Text className="mb-2 font-bold text-lg">
-              Better Luck next TIme
+            <Text className="mb-2 font-bold text-2xl">
+              {scor < 50 ? "Better Luck next Time" : "Congratulations"}
             </Text>
           </View>
         </View>

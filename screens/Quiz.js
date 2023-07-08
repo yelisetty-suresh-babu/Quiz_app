@@ -16,7 +16,7 @@ const Quiz = () => {
   // let [nextId,setNextId]=useState(0);
   const [ques, setQues] = useState(0);
   const [options, setOptions] = useState([]);
-  const [score, setScore] = useState([{ id: 0, score: 0 }]);
+  const [score, setScore] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
   const [isLoading, setIsLoading] = useState(false);
   const [over, setOver] = useState(false);
 
@@ -76,19 +76,21 @@ const Quiz = () => {
 
     if (_option === questions[ques].correct_answer) {
       let uar = [...score];
-      uar.push({ id: nextId++, score: 10 });
+      // uar.push({ id: nextId++, score: 10 });
+      uar[ques] = 10;
       setScore(uar);
       // setScore(score + 10);
     } else {
       let uar = [...score];
-      uar.push({ id: nextId++, score: 0 });
+      uar[ques]=0;
+      // uar.push({ id: nextId++, score: 0 });
       setScore(uar);
     }
-    if (ques === 0) {
-      if (_option === questions[ques].correct_answer) {
-        score[0].score = 10;
-      }
-    }
+    // if (ques === 0) {
+    //   if (_option === questions[ques].correct_answer) {
+    //     score[0].score = 10;
+    //   }
+    // }
     // console.log(score);
 
     if (ques === 9) {
@@ -105,20 +107,15 @@ const Quiz = () => {
       score: score,
     });
   };
-  // const handleBackPress = () => {
-  //   if (ques === 0) {
-  //     navigation.navigate("Home");
-  //   } else {
-  //     console.log(score);
-  //     let uar = [...score];
-  //     // uar.push({ id: nextId++, score: 0 });
-  //     uar.pop();
-  //     setScore(uar);
-  //     setQues(ques - 1);
-  //     setOptions(generateOptionsAndShuffle(questions[ques - 1]));
-  //     console.log(score);
-  //   }
-  // };
+  const handleBackPress = () => {
+    if (ques === 0) {
+      navigation.navigate("Home");
+    } else {
+      setQues(ques - 1);
+      setOptions(generateOptionsAndShuffle(questions[ques - 1]));
+      console.log(score);
+    }
+  };
   return (
     // <SafeAreaView>
     <View className="items-center justify-around h-full pt-5">
