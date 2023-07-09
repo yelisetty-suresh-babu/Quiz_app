@@ -7,39 +7,37 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Results = ({ route }) => {
   const { score } = route.params;
-  console.log(score);
+
   const [scor, setScor] = useState(0);
   const navigation = useNavigation();
-  console.log(score);
 
   useEffect(() => {
     let v = 0;
     for (let i = 0; i < 10; i++) {
       v += score[i];
     }
-    console.log(v);
+
     setScor(v);
   }, []);
-
+  // let scor = 0;
   return (
     <SafeAreaView>
-      <View className="items-center justify-around h-full bg-white">
+      <View className="items-center justify-around h-full bg-white top-10">
         <View className="mb-4">
           <Text className="text-3xl font-bold">Results</Text>
         </View>
-        {scor > 50 ? (
+        {scor >= 50 ? (
           <Image
             source={require("../assets/winner.jpeg")}
-            className="rounded-xl h-96 w-96 object-contain bottom-10"
+            className="rounded-xl h-80 w-80 object-contain bottom-10 animate-bounce"
           />
         ) : (
           <Image
             source={require("../assets/loser.jpeg")}
-            className="rounded-xl h-96 w-96 object-contain bottom-10"
+            className="rounded-xl h-80 w-80 object-contain bottom-10"
           />
         )}
         <View className="h-[250px] bg-purple-500 w-[90%] bottom-10 rounded-lg">

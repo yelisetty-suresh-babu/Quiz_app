@@ -1,7 +1,6 @@
 import { View, Text, SafeAreaView, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const shuffleArray = (array) => {
   for (let i = array.length - 1; i > 0; i--) {
@@ -13,10 +12,11 @@ let nextId = 1;
 const Quiz = () => {
   const navigation = useNavigation();
   const [questions, setQuestions] = useState();
-  // let [nextId,setNextId]=useState(0);
+
   const [ques, setQues] = useState(0);
   const [options, setOptions] = useState([]);
   const [score, setScore] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+
   const [isLoading, setIsLoading] = useState(false);
   const [over, setOver] = useState(false);
 
@@ -40,11 +40,10 @@ const Quiz = () => {
   const handleNextPress = () => {
     if (ques === 9) {
       navigation.navigate("Results", { score: score });
-      // handleNextPress();
     } else {
-      let uar = [...score];
-      uar.push({ id: nextId++, score: 0 });
-      setScore(uar);
+      // let uar = [...score];
+      // uar.push({ id: nextId++, score: 0 });
+      // setScore(uar);
       setQues(ques + 1);
       setOptions(generateOptionsAndShuffle(questions[ques + 1]));
     }
@@ -58,43 +57,21 @@ const Quiz = () => {
 
     return options;
   };
-  // const put_score = async (val) => {
-  //   await AsyncStorage.setItem(JSON.stringify(ques), val);
-  // };
-  const handlSelectedOption = (_option) => {
-    // if (_option === questions[ques].correct_answer) {
-    //   setScore(score + 10);
-    //   setQues((prev)=>prev+1)
-    // }
-    // if (ques !== 9) {
-    //   setQues(ques + 1);
-    //   setOptions(generateOptionsAndShuffle(questions[ques + 1]));
-    // }
-    // if (ques === 9) {
-    //   handleShowResult();
-    // }
 
+  const handlSelectedOption = (_option) => {
     if (_option === questions[ques].correct_answer) {
       let uar = [...score];
-      // uar.push({ id: nextId++, score: 10 });
+
       uar[ques] = 10;
       setScore(uar);
-      // setScore(score + 10);
     } else {
       let uar = [...score];
-      uar[ques]=0;
-      // uar.push({ id: nextId++, score: 0 });
+      uar[ques] = 0;
+
       setScore(uar);
     }
-    // if (ques === 0) {
-    //   if (_option === questions[ques].correct_answer) {
-    //     score[0].score = 10;
-    //   }
-    // }
-    // console.log(score);
 
     if (ques === 9) {
-      // navigation.navigate("Results", { score: score });
       handleShowResult();
     } else {
       setQues(ques + 1);
@@ -113,7 +90,7 @@ const Quiz = () => {
     } else {
       setQues(ques - 1);
       setOptions(generateOptionsAndShuffle(questions[ques - 1]));
-      console.log(score);
+
     }
   };
   return (
@@ -128,7 +105,7 @@ const Quiz = () => {
           </View>
           <View className="space-y-4 bg-gray-100 w-[350px] h-[350px] items-center justify-around p-10 rounded-xl shadow-black shadow-lg">
             <TouchableOpacity
-              className="bg-purple-700 w-[275px] rounded-xl  shadow-black shadow"
+              className="bg-purple-700 w-[275px] rounded-xl  shadow-black shadow  m-2"
               onPress={() => {
                 handlSelectedOption(options[0]);
               }}
@@ -138,7 +115,7 @@ const Quiz = () => {
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
-              className="bg-purple-700 w-[275px] rounded-xl"
+              className="bg-purple-700 w-[275px] rounded-xl m-2"
               onPress={() => {
                 handlSelectedOption(options[1]);
               }}
@@ -148,7 +125,7 @@ const Quiz = () => {
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
-              className="bg-purple-700 w-[275px] rounded-xl"
+              className="bg-purple-700 w-[275px] rounded-xl m-2"
               onPress={() => {
                 handlSelectedOption(options[2]);
               }}
@@ -158,7 +135,7 @@ const Quiz = () => {
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
-              className="bg-purple-700 w-[275px] rounded-xl"
+              className="bg-purple-700 w-[275px] rounded-xl m-2"
               onPress={() => {
                 handlSelectedOption(options[3]);
               }}
